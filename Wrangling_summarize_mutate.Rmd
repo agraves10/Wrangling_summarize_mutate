@@ -172,3 +172,19 @@ movies_ln144
 
 -   what is the average length of movies in the dataset, in hours?
 -   can you find a second way to compute the average length, by flipping the order of commands (i.e., `summarize` first and then `mutate`)?
+
+```{r}
+average_length_hours <- movies %>%
+summarize(average_length = mean(length)) %>%
+mutate(average_length_hours_summarize = average_length / 60)
+
+average_length_hours_flipped <- movies %>%
+mutate(length_hours = length / 60) %>%
+summarize(average_length_hours_mutate = mean(length_hours))
+
+average_length_hours
+average_length_hours_flipped
+
+```
+
+By reversing the order of the mutate and summarize functions, we were able to generate new datasets, such as "average_length_hours" and "average_length_hours_flipped." I would argue that using mutate first provides a more direct answer, as it gives us the average length in hours immediately when needed. However, using summarize first followed by mutate demonstrates the process that leads to the data, which can be helpful for tracking progress.
