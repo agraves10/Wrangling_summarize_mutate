@@ -68,10 +68,15 @@ Now, you try it!
 
 You may want to look at the "data transformation with dplyr" cheatsheet to review some possible summary functions. 
 
-```{r eval=FALSE}
-movies %>%
-  summarize(# fill in some commands here!)
+
+```{r eval=TRUE}
+movies_lin71<-movies %>%
+  summarize(mean(length),sd(length),min(year))
+movies_lin71
 ```
+
+The earliest films on this list were made in 1893. The average runtime of the movies is approximately 82 minutes and 34 seconds, with a standard deviation of around 44 minutes and 35 seconds.
+
 
 ## group_by
 
