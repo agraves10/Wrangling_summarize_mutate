@@ -107,11 +107,15 @@ Investigate the movies classified as Short. Are they actually shorter than other
 -   What is the average length?
 -   What is the minimum length?
 
-```{r eval=FALSE}
-movies %>%
-  group_by(# fill in some commands here!) %>%
-  summarize(# fill in some commands here!)
+
+```{r eval=TRUE}
+movies_ln99<-movies %>%
+  group_by(Short) %>%
+  summarize(mean(length),min(length))
+movies_ln99
 ```
+Short movies have a average length of close to 14 minutes, while non-short movies have an average length of about 95 minutes. Interestingly enough, Short and non-short movies have the same lowest run time for lowest length of a movie, both being 1 minute as the minimum length of a movie.
+
 
 ## mutate
 
