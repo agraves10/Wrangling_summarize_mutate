@@ -19,11 +19,11 @@ data(movies)
 
 # Deriving information
 
-So far, you have learned "verbs" for isolating data, `select`, `filter`, `arrange`. Now, we will learn verbs for deriving information, `summarize`, and `mutate`. There is an additional verb, `group_by`, which is useful in conjunction with these verbs, but not as much on its own. 
+So far, you have learned "verbs" for isolating data, `select`, `filter`, `arrange`. Now, we will learn verbs for deriving information, `summarize`, and `mutate`. There is an additional verb, `group_by`, which is useful in conjunction with these verbs, but not as much on its own.
 
 ## summarize
 
-Summarize is a many-to-one or many-to-few operation. It summarizes the dataset down to fewer numbers. 
+Summarize is a many-to-one or many-to-few operation. It summarizes the dataset down to fewer numbers.
 
 Let's say we want to know the average budget of the movies in the `movies` dataset. The way to compute that is with summarize,
 
@@ -40,7 +40,7 @@ movies %>%
   summarize(mean(budget))
 ```
 
-Notice that this pipeline does not change the `movies` dataset in our environment. The NA values are still present in the data, and the entire dataset is just how it started.  We just `summarize`d the data down to a single number in our Console or RMarkdown document. 
+Notice that this pipeline does not change the `movies` dataset in our environment. The NA values are still present in the data, and the entire dataset is just how it started. We just `summarize`d the data down to a single number in our Console or RMarkdown document.
 
 If we want, we can add additional statistics to our `summarize` command,
 
@@ -60,14 +60,13 @@ movies %>%
 
 ### Your turn
 
-Now, you try it! 
+Now, you try it!
 
-- What year was the earliest movie in the dataset released? 
-- What is the average length of movies?
-- What is the standard deviation of length?
+-   What year was the earliest movie in the dataset released?
+-   What is the average length of movies?
+-   What is the standard deviation of length?
 
-You may want to look at the "data transformation with dplyr" cheatsheet to review some possible summary functions. 
-
+You may want to look at the "data transformation with dplyr" cheatsheet to review some possible summary functions.
 
 ```{r eval=TRUE}
 movies_lin71<-movies %>%
@@ -78,28 +77,35 @@ movies_lin71
 The earliest films on this list were made in 1893. The average runtime of the movies is approximately 82 minutes and 34 seconds, with a standard deviation of around 44 minutes and 35 seconds.
 
 
+
 ## group_by
 
-The `group_by` function groups cases by common values. 
+The `group_by` function groups cases by common values.
 
-This is useful if want to compute summary statistics by group. For example, we may be interested in whether action movies are longer than non-action movies. 
+This is useful if want to compute summary statistics by group. For example, we may be interested in whether action movies are longer than non-action movies.
 
 We already know how to compute the average length of movies overall. What we need to add to our pipeline is a `group_by`
 
-```{r eval=FALSE}
-movies %>%
+
+
+```{r eval=TRUE}
+movies_ln84<-movies %>%
   group_by(Action) %>%
+  summarize(mean(length),sd(length),min(year))
   # move your summarize code from the last exercise here!
+movies_ln84
 ```
 
-Which movies are longer, action movies or non-action movies? 
+Which movies are longer, action movies or non-action movies?
+
+On average, action movies tend to be longer, with runtimes around 100 minutes, while non-action movies have an average runtime of about 81 minutes. The standard deviation further highlights this difference, as it is smaller for action movies, indicating that their runtimes are more consistent and closer to 100 minutes, whereas non-action movies exhibit more variation in runtime.
 
 ### Your turn
 
-Investigate the movies classified as Short. Are they actually shorter than other movies? 
+Investigate the movies classified as Short. Are they actually shorter than other movies?
 
-- What is the average length? 
-- What is the minimum length?
+-   What is the average length?
+-   What is the minimum length?
 
 ```{r eval=FALSE}
 movies %>%
@@ -107,24 +113,23 @@ movies %>%
   summarize(# fill in some commands here!)
 ```
 
-
 ## mutate
 
-The `mutate` function creates new variables (columns) in the dataset. Typically, we use it to make new variables from old ones. 
+The `mutate` function creates new variables (columns) in the dataset. Typically, we use it to make new variables from old ones.
 
-For example, we may be interested in the length of movies in hours, rather than in minutes. 
+For example, we may be interested in the length of movies in hours, rather than in minutes.
 
 ```{r}
 movies <- movies %>%
   mutate(length_hrs = length / 60)
 ```
 
-Let's read this code carefully. 
+Let's read this code carefully.
 
-- what does the `<-` do?
-- why are we writing `/60`?
-- what does the `=` do?
-- why did we use the name `length_hrs`?
+-   what does the `<-` do?
+-   why are we writing `/60`?
+-   what does the `=` do?
+-   why did we use the name `length_hrs`?
 
 ### Your turn
 
@@ -137,11 +142,11 @@ movies <- movies %>%
 
 ## Putting it together
 
-Now that we have a bunch of wrangling skills, let's put them together. 
+Now that we have a bunch of wrangling skills, let's put them together.
 
-- pull out the movies that had a high percent of low ratings (Hint: what command will you use to do this?)
-- pull out movies that had a high percent of low ratings *and* more than 5 votes. 
-- how many of these bad movies were there?
+-   pull out the movies that had a high percent of low ratings (Hint: what command will you use to do this?)
+-   pull out movies that had a high percent of low ratings *and* more than 5 votes.
+-   how many of these bad movies were there?
 
 To accomplish that last task, we need a specialty function, `n`. Here's how it works
 
@@ -150,6 +155,5 @@ movies %>%
   summarize(n())
 ```
 
-- what is the average length of movies in the dataset, in hours? 
-- can you find a second way to compute the average length, by flipping the order of commands (i.e., `summarize` first and then `mutate`)?
-
+-   what is the average length of movies in the dataset, in hours?
+-   can you find a second way to compute the average length, by flipping the order of commands (i.e., `summarize` first and then `mutate`)?
